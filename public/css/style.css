@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20 sept. 2016, 02:17:22
+    Author     : Guillaume RAZIMBAUD
+*/
+
+body, html{
+    background-color: lightgray;
+    margin:0;
+    padding:0;
+}
+
+#toolbar{
+    margin : 0px;
+    padding-left: 10px;
+    height: 52px;
+    width: 100%;
+    background-color: #009900;
+}
+
+.button img {
+    width: 48px;
+    margin : 2px;
+}
+
+.content{
+    width: 80%;
+    margin: auto;
+    margin-top: 15px;
+    padding: 5px;
+    border-left: #dddddd 1px solid;
+    border-right: #dddddd 1px solid;
+}
