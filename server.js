@@ -61,9 +61,9 @@ app.get('/',
 
 app.get('/login(/:error)?',
         function (req, res) {
-            res.render('login', {error: req.params.error});
+            res.render('login', {user: req.user, error: req.params.error});
         });
-        
+
 
 app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login/error'}));
 

@@ -5,8 +5,13 @@ html
         link(rel='stylesheet', href='/css/style.css')
     body
         div#toolbar
-            div.button
-                a(href='http://www.google.fr')
-                    img(src='/menu.png')
+            if user
+                div.button.log_button
+                    a(href='/logout')
+                        img(src='/images/logout.png')
+            else
+                div.button.log_button
+                    a(href='/login')
+                        img(src='/images/login.png')
         div.content
             block content
