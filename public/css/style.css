@@ -35,3 +35,8 @@ body, html{
     border-left: #dddddd 1px solid;
     border-right: #dddddd 1px solid;
 }
+
+.error {
+    color: red;
+    font-size: small;
+}

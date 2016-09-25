@@ -3,13 +3,6 @@ var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var db = require('./db');
 
-
-// Configure the local strategy for use by Passport.
-//
-// The local strategy require a `verify` function which receives the credentials
-// (`username` and `password`) submitted by the user.  The function must verify
-// that the password is correct and then invoke `cb` with a user object, which
-// will be set at `req.user` in route handlers after authentication.
 passport.use(new Strategy(
         function (username, password, cb) {
             db.users.findByUsername(username, function (err, user) {
@@ -19,36 +12,25 @@ passport.use(new Strategy(
                 if (!user) {
                     return cb(null, false);
                 }
-                if (user.password != password) {
+                if (user.PASSWD != db.utils.hash(password, user.SEL)) {
                     return cb(null, false);
                 }
                 return cb(null, user);
             });
         }));
 
-
-// Configure Passport authenticated session persistence.
-//
-// In order to restore authentication state across HTTP requests, Passport needs
-// to serialize users into and deserialize users out of the session.  The
-// typical implementation of this is as simple as supplying the user ID when
-// serializing, and querying the user record by ID from the database when
-// deserializing.
 passport.serializeUser(function (user, cb) {
-    cb(null, user.id);
+    cb(null, user.NAME);
 });
 
-passport.deserializeUser(function (id, cb) {
-    db.users.findById(id, function (err, user) {
+passport.deserializeUser(function (name, cb) {
+    db.users.findByUsername(name, function (err, user) {
         if (err) {
             return cb(err);
         }
         cb(null, user);
     });
 });
-
-
-
 
 // Create a new Express application.
 var app = express();
@@ -77,16 +59,13 @@ app.get('/',
             res.render('home', {user: req.user});
         });
 
-app.get('/login',
+app.get('/login(/:error)?',
         function (req, res) {
-            res.render('login');
+            res.render('login', {error: req.params.error});
         });
+        
 
-app.post('/login',
-        passport.authenticate('local', {failureRedirect: '/login'}),
-        function (req, res) {
-            res.redirect('/');
-        });
+app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login/error'}));
 
 app.get('/logout',
         function (req, res) {

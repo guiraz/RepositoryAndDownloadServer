@@ -11,14 +11,29 @@ exports.getUser = function (name, cb) {
         var query = "SELECT * FROM USERS WHERE NAME='" + name + "'";
         sql.get(query, function (err, row) {
             if (err) {
-                cb(err);
+                cb(err, null);
             } else {
-                cb(row);
+                cb(null, row);
             }
         });
     });
     sql.close();
 };
+
+//exports.getUsers = function (cb) {
+//    var sql = new sqlite3.Database(file);
+//    sql.serialize(function () {
+//        var query = "SELECT * FROM USERS";
+//        sql.all(query, function (err, rows) {
+//            if (err) {
+//                cb(err);
+//            } else {
+//                cb(rows);
+//            }
+//        });
+//    });
+//    sql.close();
+//};
 
 function createDb() {
     var db;
