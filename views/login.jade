@@ -2,14 +2,20 @@ extends layout
 
 block content
     form(action="/login", method="post")
-        div
-            label Username:
-            input(type="text", name="username")
-        div
-            label Password:
-            input(type="password", name="password")
-        div
-            input(type="submit", name="Submit")
+        table#login
+            tr
+                td.td_label 
+                    label Username:
+                td.td_input 
+                    input(type="text", name="username")
+            tr
+                td.td_label 
+                    label Password:
+                td.td_input
+                    input(type="password", name="password")
+            tr
+                td(colspan="2").td_submit
+                    input(type="submit", name="Submit")
         if error
             div
                 p.error Login invalid

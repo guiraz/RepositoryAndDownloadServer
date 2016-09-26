@@ -28,6 +28,44 @@ body, html{
     background-color: #009900;
 }
 
+#login {
+    margin: auto;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+.td_input input {
+    display: block;
+    margin: auto;
+    width: 90%;
+}
+
+.td_submit input {
+    display: block;
+    margin: auto;
+    border-radius: 25px;
+    color: #555555;
+    background-color: #009900;
+    border: none;
+    width: 100px;
+    padding: 5px;
+}
+
+.td_submit input:hover {
+    color: #009900;
+    background-color: #555555;
+}
+
+.td_submit input:active {
+    color: #009900;
+    background-color: #dddddd;
+}
+
+.td_label {
+    text-align: right;
+    color: #555555;
+}
+
 .button img {
     width: 48px;
     margin : 2px;
