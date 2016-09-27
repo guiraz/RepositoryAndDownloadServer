@@ -5,7 +5,7 @@ var db = require('./db');
 
 passport.use(new Strategy(
         function (username, password, cb) {
-            db.users.findByUsername(username, function (err, user) {
+            db.sqlite.getUser(username, function (err, user) {
                 if (err) {
                     return cb(err);
                 }
@@ -24,7 +24,7 @@ passport.serializeUser(function (user, cb) {
 });
 
 passport.deserializeUser(function (name, cb) {
-    db.users.findByUsername(name, function (err, user) {
+    db.sqlite.getUser(name, function (err, user) {
         if (err) {
             return cb(err);
         }
@@ -59,30 +59,53 @@ app.get('/',
             res.render('home', {user: req.user});
         });
 
-app.get('/add_user',
-        require('connect-ensure-login').ensureLoggedIn(),
-        function (req, res) {
-            res.render('add_user', {user: req.user});
-        });
-
 app.get('/login(/:error)?',
         function (req, res) {
             res.render('login', {user: req.user, error: req.params.error});
         });
 
+app.get('/add_user(/:error)?',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+            db.sqlite.getUsers(function (err, users) {
+                if (err) {
+                    res.render('add_user', {user: req.user, users: [], error: req.params.error});
+                } else {
+                    res.render('add_user', {user: req.user, users: users, error: req.params.error});
+                }
+            });
+        });
+
 
 app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login/error'}));
+
+app.post('/set_admin_:user_to_update',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+
+            if (req.user.NAME == req.params.user_to_update) {
+                res.redirect('/add_user/error');
+                return;
+            }
+
+            var isAdmin = req.body.admin_root;
+            if (isAdmin == undefined) {
+                isAdmin = 'FALSE';
+            }
+
+            db.sqlite.setAdmin(req.params.user_to_update, isAdmin, function (err, users) {
+                if (err) {
+                    res.redirect('/add_user/error');
+                    return;
+                }
+                res.redirect('/add_user');
+            });
+        });
 
 app.get('/logout',
         function (req, res) {
             req.logout();
             res.redirect('/');
-        });
-
-app.get('/profile',
-        require('connect-ensure-login').ensureLoggedIn(),
-        function (req, res) {
-            res.render('profile', {user: req.user});
         });
 
 app.listen(3000);

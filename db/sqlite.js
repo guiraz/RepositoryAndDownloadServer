@@ -20,6 +20,36 @@ exports.getUser = function (name, cb) {
     sql.close();
 };
 
+exports.getUsers = function (cb) {
+    var sql = new sqlite3.Database(file);
+    sql.serialize(function () {
+        var query = "SELECT * FROM USERS";
+        sql.all(query, function (err, rows) {
+            if (err) {
+                cb(err);
+            } else {
+                cb(null, rows);
+            }
+        });
+    });
+    sql.close();
+};
+
+exports.setAdmin = function (name, isAdmin, cb){
+    var sql = new sqlite3.Database(file);
+    sql.serialize(function () {
+        var query = "UPDATE USERS SET ADMIN = '" + isAdmin + "' WHERE NAME = '" + name + "'";
+        sql.run(query, function (err) {
+            if (err) {
+                cb(err);
+            } else {
+                cb(null);
+            }
+        });
+    });
+    sql.close();
+}
+
 function createDb() {
     var db;
     var createTable = function () {
