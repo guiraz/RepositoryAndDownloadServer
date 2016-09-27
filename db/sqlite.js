@@ -20,21 +20,6 @@ exports.getUser = function (name, cb) {
     sql.close();
 };
 
-//exports.getUsers = function (cb) {
-//    var sql = new sqlite3.Database(file);
-//    sql.serialize(function () {
-//        var query = "SELECT * FROM USERS";
-//        sql.all(query, function (err, rows) {
-//            if (err) {
-//                cb(err);
-//            } else {
-//                cb(rows);
-//            }
-//        });
-//    });
-//    sql.close();
-//};
-
 function createDb() {
     var db;
     var createTable = function () {
@@ -45,12 +30,12 @@ function createDb() {
     if (!exists) {
         db = new sqlite3.Database(file, 'OPEN_CREATE', createTable);
         db.serialize(function () {
-            var cmd = "CREATE TABLE 'USERS' ('NAME' VARCHAR PRIMARY KEY UNIQUE NOT NULL, 'PASSWD' VARCHAR NOT NULL, 'SEL' VARCHAR NOT NULL)";
+            var cmd = "CREATE TABLE 'USERS' ('NAME' VARCHAR PRIMARY KEY UNIQUE NOT NULL, 'PASSWD' VARCHAR NOT NULL, 'SEL' VARCHAR NOT NULL, 'ADMIN' BOOLEAN DEFAULT 'FALSE' NOT NULL)";
             db.run(cmd, insertRows);
 
             var guid = utils.rand_guid();
             var hash = utils.hash("alpine", guid);
-            db.run("INSERT INTO USERS VALUES ('root', '" + hash + "', '" + guid + "' )");
+            db.run("INSERT INTO USERS VALUES ('root', '" + hash + "', '" + guid + "', 'TRUE' )");
         });
         
         db.close();

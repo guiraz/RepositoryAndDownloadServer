@@ -89,3 +89,40 @@ body, html{
     color: red;
     font-size: small;
 }
+
+.tooltiped {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip_text_left {
+    visibility: hidden;
+    width: 120px;
+    background-color: window;
+    color: lightsalmon;
+    text-align: center;
+
+    position: absolute;
+    z-index: 1;
+    right: 105%; 
+}
+
+.tooltip_text_right {
+    visibility: hidden;
+    width: 120px;
+    background-color: window;
+    color: lightsalmon;
+    text-align: center;
+
+    position: absolute;
+    z-index: 1;
+    left: 105%; 
+}
+
+.tooltiped:hover .tooltip_text_left{
+    visibility: visible;
+}
+
+.tooltiped:hover .tooltip_text_right{
+    visibility: visible;
+}

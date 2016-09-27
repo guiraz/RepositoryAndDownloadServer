@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    if user.ADMIN == 'TRUE'
+        p authorized
+    else
+        p not authorized

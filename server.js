@@ -59,6 +59,12 @@ app.get('/',
             res.render('home', {user: req.user});
         });
 
+app.get('/add_user',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+            res.render('add_user', {user: req.user});
+        });
+
 app.get('/login(/:error)?',
         function (req, res) {
             res.render('login', {user: req.user, error: req.params.error});

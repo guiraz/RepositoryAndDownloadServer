@@ -6,11 +6,21 @@ html
     body
         div#toolbar
             if user
-                div.button.log_button
+                div.button.log_button.tooltiped
+                    div.tooltip_text_left
+                        p Log out
                     a(href='/logout')
                         img(src='/images/logout.png')
+                if user.ADMIN == 'TRUE'
+                    div.button.tooltiped
+                        div.tooltip_text_right
+                            p Add a new user
+                        a(href='/add_user')
+                            img(src='/images/add_user.png')
             else
-                div.button.log_button
+                div.button.log_button.tooltiped
+                    div.tooltip_text_left
+                        p Log in
                     a(href='/login')
                         img(src='/images/login.png')
         div.content
