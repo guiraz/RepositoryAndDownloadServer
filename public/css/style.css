@@ -112,7 +112,8 @@ td {
 
     position: absolute;
     z-index: 1;
-    right: 105%; 
+    right: 50%;
+    top:90%;
 }
 
 .tooltip_text_right {
@@ -124,7 +125,8 @@ td {
 
     position: absolute;
     z-index: 1;
-    left: 105%; 
+    left: 50%;
+    top:90%;
 }
 
 .tooltiped:hover .tooltip_text_left{

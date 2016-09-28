@@ -65,6 +65,21 @@ exports.addUser = function (name, hash, guid, isAdmin, cb){
     sql.close();
 };
 
+exports.deleteUser = function (name, cb){
+    var sql = new sqlite3.Database(file);
+    sql.serialize(function () {
+        var query = "DELETE FROM USERS WHERE NAME = '" + name + "'";
+        sql.run(query, function (err) {
+            if (err) {
+                cb(err);
+            } else {
+                cb(null);
+            }
+        });
+    });
+    sql.close();
+};
+
 function createDb() {
     var db;
     var createTable = function () {

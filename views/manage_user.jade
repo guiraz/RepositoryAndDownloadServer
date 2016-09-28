@@ -13,17 +13,34 @@ block content
                             p User name
                         td
                             p isAdmin
+                        td
+                            p Delete
                     each use in users
                         tr
                             td
                                 label #{use.NAME}
                             td
                                 if use.ADMIN == 'TRUE'
-                                    form(action="/set_admin_#{use.NAME}", method="post")
-                                        input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE", checked)
+                                    if use.NAME == user.NAME
+                                        form(action="/set_admin_#{use.NAME}", method="post")
+                                            input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE", checked, disabled)
+                                    else
+                                        form(action="/set_admin_#{use.NAME}", method="post")
+                                            input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE", checked)
                                 else
-                                    form(action="/set_admin_#{use.NAME}", method="post")
-                                        input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE")
+                                    if use.NAME == user.NAME
+                                        form(action="/set_admin_#{use.NAME}", method="post")
+                                            input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE", disabled)
+                                    else
+                                        form(action="/set_admin_#{use.NAME}", method="post")
+                                            input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE")
+                            td
+                                div.button.tooltiped
+                                    div.tooltip_text_right
+                                        p Delete user
+                                    form(action="/delete_user_#{use.NAME}" method="POST")
+                                        a(href="#", onclick="this.parentNode.submit()")
+                                            img(src='/images/trash.png')
                 h1 Add user
                 form(action="/add_user", method="post")
                     table

@@ -139,6 +139,24 @@ app.post('/set_admin_:user_to_update',
             });
         });
 
+app.post('/delete_user_:user_to_delete',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+
+            if (req.user.NAME == req.params.user_to_delete) {
+                res.redirect('/manage_user/error');
+                return;
+            }
+
+            db.sqlite.deleteUser(req.params.user_to_delete, function (err) {
+                if (err) {
+                    res.redirect('/manage_user/error');
+                    return;
+                }
+                res.redirect('/manage_user');
+            });
+        });
+
 app.get('/logout',
         function (req, res) {
             req.logout();
