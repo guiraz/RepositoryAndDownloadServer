@@ -42,6 +42,10 @@ table {
     width: 50%;
 }
 
+table .button img{
+    width: 36px;
+}
+
 td {
     text-align: center;
 }
@@ -61,6 +65,15 @@ td {
     display: block;
     margin: auto;
     width: 90%;
+}
+
+.bordered td.td_submit{
+    border: none;
+}
+
+#folder_chooser{
+    background: none;
+    border: none;
 }
 
 .td_submit input {
