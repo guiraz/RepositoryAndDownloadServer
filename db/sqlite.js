@@ -48,7 +48,22 @@ exports.setAdmin = function (name, isAdmin, cb){
         });
     });
     sql.close();
-}
+};
+
+exports.addUser = function (name, hash, guid, isAdmin, cb){
+    var sql = new sqlite3.Database(file);
+    sql.serialize(function () {
+        var query = "INSERT INTO USERS VALUES ('" + name + "', '" + hash + "', '" + guid + "', '" + isAdmin + "' )";
+        sql.run(query, function (err) {
+            if (err) {
+                cb(err);
+            } else {
+                cb(null);
+            }
+        });
+    });
+    sql.close();
+};
 
 function createDb() {
     var db;

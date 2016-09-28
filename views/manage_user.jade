@@ -1,0 +1,56 @@
+extends layout
+
+block content
+    if error
+            div
+                p.error An error occured.
+    if user.ADMIN == 'TRUE'
+            div
+                h1 Admin border
+                table.bordered
+                    tr.tr_header
+                        td
+                            p User name
+                        td
+                            p isAdmin
+                    each use in users
+                        tr
+                            td
+                                label #{use.NAME}
+                            td
+                                if use.ADMIN == 'TRUE'
+                                    form(action="/set_admin_#{use.NAME}", method="post")
+                                        input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE", checked)
+                                else
+                                    form(action="/set_admin_#{use.NAME}", method="post")
+                                        input(type="checkbox", name="is_admin", onChange="this.form.submit()", value="TRUE")
+                h1 Add user
+                form(action="/add_user", method="post")
+                    table
+                        tr
+                            td.td_label 
+                                label Username:
+                            td.td_input 
+                                input(type="text", name="username")
+                        tr
+                            td.td_label 
+                                label Password:
+                            td.td_input 
+                                input(type="password", name="password_1")
+                        tr
+                            td.td_label 
+                                label Comfirm password:
+                            td.td_input 
+                                input(type="password", name="password_2")
+                        tr
+                            td.td_label 
+                                label Is admin:
+                            td.td_input 
+                                input(type="checkbox", name="is_admin", value="TRUE")
+                        tr
+                            td(colspan="2").td_submit
+                                input(type="submit", name="Submit", value="Add user")
+                        
+    else
+        div
+            p.error You are not authorized to manage users.
