@@ -53,6 +53,10 @@ app.use(passport.session());
 
 app.use(express.static(__dirname + '/public'));
 
+// Regular expression pattern for user names and passwords
+var pattName = /\w{3}\w*/;
+var pattPass = /\S{6}\S*/;
+
 // Define routes.
 app.get('/',
         function (req, res) {
@@ -76,28 +80,31 @@ app.get('/manage_user(/:error)?',
             });
         });
 
+app.get('/settings(/:error)?',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+            res.render('settings', {user: req.user, error: req.params.error});
+        });
+
 
 app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/login/error'}));
 
 app.post('/add_user',
         require('connect-ensure-login').ensureLoggedIn(),
-        function(req, res){
-            
-            var pattName = /\w{3}\w*/;
-            var pattPass = /\S{6}\S*/;
-            
+        function (req, res) {
+
             var userName = req.body.username;
-            if(userName.match(pattName) != userName){
+            if (userName.match(pattName) != userName) {
                 res.redirect('/manage_user/error');
                 return;
             }
             var password_1 = req.body.password_1;
-            if(password_1.match(pattPass) != password_1){
+            if (password_1.match(pattPass) != password_1) {
                 res.redirect('/manage_user/error');
                 return;
             }
             var password_2 = req.body.password_2;
-            if(password_1 != password_2){
+            if (password_1 != password_2) {
                 res.redirect('/manage_user/error');
                 return;
             }
@@ -154,6 +161,31 @@ app.post('/delete_user_:user_to_delete',
                     return;
                 }
                 res.redirect('/manage_user');
+            });
+        });
+
+app.post('/set_password',
+        require('connect-ensure-login').ensureLoggedIn(),
+        function (req, res) {
+
+            var password_1 = req.body.password_1;
+            if (password_1.match(pattPass) != password_1) {
+                res.redirect('/settings/error');
+                return;
+            }
+            var password_2 = req.body.password_2;
+            if (password_1 != password_2) {
+                res.redirect('/settings/error');
+                return;
+            }
+
+            var guid = db.utils.rand_guid();
+            db.sqlite.setPassword(req.user.NAME, db.utils.hash(password_1, guid), guid, function (err) {
+                if (err) {
+                    res.redirect('/settings/error');
+                    return;
+                }
+                res.redirect('/settings');
             });
         });
 

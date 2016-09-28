@@ -50,6 +50,21 @@ exports.setAdmin = function (name, isAdmin, cb){
     sql.close();
 };
 
+exports.setPassword = function (name, hash, guid, cb){
+    var sql = new sqlite3.Database(file);
+    sql.serialize(function () {
+        var query = "UPDATE USERS SET PASSWD = '" + hash + "', SEL = '" + guid + "' WHERE NAME = '" + name + "'";
+        sql.run(query, function (err) {
+            if (err) {
+                cb(err);
+            } else {
+                cb(null);
+            }
+        });
+    });
+    sql.close();
+};
+
 exports.addUser = function (name, hash, guid, isAdmin, cb){
     var sql = new sqlite3.Database(file);
     sql.serialize(function () {

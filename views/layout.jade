@@ -11,6 +11,11 @@ html
                         p Log out
                     a(href='/logout')
                         img(src='/images/logout.png')
+                div.button.tooltiped
+                    div.tooltip_text_right
+                        p Settings
+                    a(href='/settings')
+                        img(src='/images/settings.png')
                 if user.ADMIN == 'TRUE'
                     div.button.tooltiped
                         div.tooltip_text_right
