@@ -68,14 +68,14 @@ app.get('/login(/:error)?',
             res.render('login', {user: req.user, error: req.params.error});
         });
 
-app.get('/manage_user(/:error)?',
+app.get('/manage(/:error)?',
         require('connect-ensure-login').ensureLoggedIn(),
         function (req, res) {
             db.sqlite.getUsers(function (err, users) {
                 if (err) {
-                    res.render('manage_user', {user: req.user, users: [], error: req.params.error});
+                    res.render('manage', {user: req.user, users: [], error: req.params.error});
                 } else {
-                    res.render('manage_user', {user: req.user, users: users, error: req.params.error});
+                    res.render('manage', {user: req.user, users: users, error: req.params.error});
                 }
             });
         });
@@ -95,17 +95,17 @@ app.post('/add_user',
 
             var userName = req.body.username;
             if (userName.match(pattName) != userName) {
-                res.redirect('/manage_user/error');
+                res.redirect('/manage/error');
                 return;
             }
             var password_1 = req.body.password_1;
             if (password_1.match(pattPass) != password_1) {
-                res.redirect('/manage_user/error');
+                res.redirect('/manage/error');
                 return;
             }
             var password_2 = req.body.password_2;
             if (password_1 != password_2) {
-                res.redirect('/manage_user/error');
+                res.redirect('/manage/error');
                 return;
             }
             var isAdmin = req.body.is_admin;
@@ -116,10 +116,10 @@ app.post('/add_user',
             var guid = db.utils.rand_guid();
             db.sqlite.addUser(userName, db.utils.hash(password_1, guid), guid, isAdmin, function (err) {
                 if (err) {
-                    res.redirect('/manage_user/error');
+                    res.redirect('/manage/error');
                     return;
                 }
-                res.redirect('/manage_user');
+                res.redirect('/manage');
             });
         });
 
@@ -128,7 +128,7 @@ app.post('/set_admin_:user_to_update',
         function (req, res) {
 
             if (req.user.NAME == req.params.user_to_update) {
-                res.redirect('/manage_user/error');
+                res.redirect('/manage/error');
                 return;
             }
 
@@ -139,10 +139,10 @@ app.post('/set_admin_:user_to_update',
 
             db.sqlite.setAdmin(req.params.user_to_update, isAdmin, function (err, users) {
                 if (err) {
-                    res.redirect('/manage_user/error');
+                    res.redirect('/manage/error');
                     return;
                 }
-                res.redirect('/manage_user');
+                res.redirect('/manage');
             });
         });
 
@@ -151,16 +151,16 @@ app.post('/delete_user_:user_to_delete',
         function (req, res) {
 
             if (req.user.NAME == req.params.user_to_delete) {
-                res.redirect('/manage_user/error');
+                res.redirect('/manage/error');
                 return;
             }
 
             db.sqlite.deleteUser(req.params.user_to_delete, function (err) {
                 if (err) {
-                    res.redirect('/manage_user/error');
+                    res.redirect('/manage/error');
                     return;
                 }
-                res.redirect('/manage_user');
+                res.redirect('/manage');
             });
         });
 
