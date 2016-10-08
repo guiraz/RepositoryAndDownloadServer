@@ -1,0 +1,28 @@
+/**
+ * Submit button
+**/
+
+.bordered td.td_submit {
+    border: none;
+}
+
+.td_submit input {
+    display: block;
+    margin: auto;
+    border-radius: 25px;
+    color: #555555;
+    background-color: #009900;
+    border: none;
+    width: 100px;
+    padding: 5px;
+}
+
+.td_submit input:hover {
+    color: #009900;
+    background-color: #555555;
+}
+
+.td_submit input:active {
+    color: #009900;
+    background-color: #dddddd;
+}

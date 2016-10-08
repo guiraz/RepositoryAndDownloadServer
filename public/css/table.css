@@ -1,0 +1,44 @@
+/**
+ * Tables
+**/
+
+table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 50%;
+    text-align: center;
+}
+
+table .button img{
+    width: 36px;
+}
+
+/** Simple table **/
+
+.bordered td {
+    border: black solid 1px;
+}
+
+.tr_header {
+    background-color: grey;
+    color: black;
+    font-size: large;
+    font-weight: bold;
+}
+
+/** Form table **/
+
+.form td {
+    border: none;
+}
+
+.td_input input {
+    display: block;
+    margin: auto;
+    width: 90%;
+}
+
+.td_label {
+    text-align: right;
+    color: #555555;
+}
