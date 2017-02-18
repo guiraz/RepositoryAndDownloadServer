@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var db = require('./db');
+var port = 3000;
 
 passport.use(new Strategy(
         function (username, password, cb) {
@@ -72,17 +73,12 @@ app.get('/manage(/:error)?',
         require('connect-ensure-login').ensureLoggedIn(),
         function (req, res) {
             db.sqlite.getUsers(function (users_err, users) {
-                db.sqlite.getFolders(function (folders_err, folders) {
-                    if (folders_err && users_err) {
-                        res.render('manage', {user: req.user, users: [], folders: [], error: req.params.error});
-                    } else if (users_err) {
-                        res.render('manage', {user: req.user, users: [], folders: folders, error: req.params.error});
-                    } else if (folders_err) {
-                        res.render('manage', {user: req.user, users: users, folders: [], error: req.params.error});
-                    } else {
-                        res.render('manage', {user: req.user, users: users, folders: folders, error: req.params.error});
-                    }
-                });
+                if (users_err) {
+                    res.render('manage', {user: req.user, users: [], error: req.params.error});
+                }
+                else {
+                    res.render('manage', {user: req.user, users: users, error: req.params.error});
+                }
             });
         });
 
@@ -170,18 +166,6 @@ app.post('/delete_user_:user_to_delete',
             });
         });
 
-app.post('/delete_folder_:id_to_delete',
-        require('connect-ensure-login').ensureLoggedIn(),
-        function (req, res) {
-            db.sqlite.deleteFolder(req.params.id_to_delete, function (err) {
-                if (err) {
-                    res.redirect('/manage/error');
-                    return;
-                }
-                res.redirect('/manage');
-            });
-        });
-
 app.post('/set_password',
         require('connect-ensure-login').ensureLoggedIn(),
         function (req, res) {
@@ -207,15 +191,10 @@ app.post('/set_password',
             });
         });
 
-app.post('/add_folder',
-        require('connect-ensure-login').ensureLoggedIn(),
-        function (req, res) {
-        });
-
 app.get('/logout',
         function (req, res) {
             req.logout();
             res.redirect('/');
         });
 
-app.listen(3000);
+app.listen(port);

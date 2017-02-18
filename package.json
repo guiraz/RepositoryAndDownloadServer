@@ -16,7 +16,8 @@
     "sqlite3": "^3.1.4"
   },
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "rb": "npm rb"
     }
 
 }

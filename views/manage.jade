@@ -67,29 +67,6 @@ block content
                         tr
                             td(colspan="2").td_submit
                                 input(type="submit", name="Submit", value="Add user")
-                h1 Root folders
-                table.bordered
-                    tr.tr_header
-                        td
-                            p Folder
-                        td
-                            p Delete
-                    each folder in folders
-                        tr
-                            td
-                                p #{folder.FOLDER}
-                            td
-                                div.button.tooltiped
-                                    div.tooltip_text_right
-                                        p Delete folder
-                                    form(action="/delete_folder_#{folder.ID}" method="POST")
-                                        a(href="#", onclick="this.parentNode.submit()")
-                                            img(src='/images/trash.png')
-                    tr
-                        td(colspan="2").td_submit
-                            form(action="/add_folder" method="POST")
-                                //input#folder_chooser(type="file", name="folder_chooser", onclick="this.form.submit()", webkitdirectory, directory, multiple)
-                                input(type="submit", name="folder_chooser", value="Add folder")
                     
     else
         div
