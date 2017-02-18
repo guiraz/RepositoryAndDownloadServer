@@ -62,5 +62,6 @@ require('./lib/home.js')(app);
 require('./lib/login.js')(app, passport);
 require('./lib/manage.js')(app);
 require('./lib/settings.js')(app);
+require('./lib/file_system.js')(app);
         
 app.listen(port);
