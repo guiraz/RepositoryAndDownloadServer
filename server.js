@@ -1,7 +1,7 @@
 var express = require('express'),
         passport = require('passport'),
         Strategy = require('passport-local').Strategy,
-        db = require('./db'),
+        db = require('./lib/db'),
         app = express(),
         port = 3000,
         pattName = /\w{3}\w*/,
