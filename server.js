@@ -56,10 +56,10 @@ app.use(passport.session());
 
 // Define routes.
 
-require('./lib/home.js')(app);
-require('./lib/login.js')(app, passport);
-require('./lib/manage.js')(app);
-require('./lib/settings.js')(app);
-require('./lib/file_system.js')(app);
+require('./lib/route/home.js')(app);
+require('./lib/route/login.js')(app, passport);
+require('./lib/route/manage.js')(app);
+require('./lib/route/settings.js')(app);
+require('./lib/route/file_system.js')(app);
 
 app.listen(port);
