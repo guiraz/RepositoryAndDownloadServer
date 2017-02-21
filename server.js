@@ -3,7 +3,9 @@ var express = require('express'),
         Strategy = require('passport-local').Strategy,
         db = require('./db'),
         app = express(),
-        port = 3000;
+        port = 3000,
+        pattName = /\w{3}\w*/,
+        pattPass = /\S{6}\S*/;
 
 passport.use(new Strategy(
         function (username, password, cb) {
@@ -34,9 +36,11 @@ passport.deserializeUser(function (name, cb) {
     });
 });
 
-// Configure view engine to render Jade templates.
+// Configure view engine to render pug templates.
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
+
+app.use(express.static(__dirname + '/public'));
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -50,12 +54,6 @@ app.use(require('express-session')({secret: 'keyboard cat', resave: false, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(__dirname + '/public'));
-
-// Regular expression pattern for user names and passwords
-var pattName = /\w{3}\w*/;
-var pattPass = /\S{6}\S*/;
-
 // Define routes.
 
 require('./lib/home.js')(app);
@@ -63,5 +61,5 @@ require('./lib/login.js')(app, passport);
 require('./lib/manage.js')(app);
 require('./lib/settings.js')(app);
 require('./lib/file_system.js')(app);
-        
+
 app.listen(port);
