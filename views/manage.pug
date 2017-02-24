@@ -67,7 +67,19 @@ block content
                         tr
                             td(colspan="2").td_submit
                                 input(type="submit", name="Submit", value="Add user")
+                h1 Set the root folder
+                form(action="/set_root_folder", method="post")
+                    table.form
+                        tr
+                            td.td_label 
+                                label Root folder:
+                            td.td_input 
+                                input(type="text", name="root_folder", value=root_folder[0].PATH)
+                        tr
+                            td(colspan="2").td_submit
+                                input(type="submit", name="submit_root_folder", value="Set root folder")
+                
                     
     else
         div
-            p.error You are not authorized to manage users.
+            p.error You are not authorized to manage.
