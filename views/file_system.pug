@@ -2,14 +2,14 @@ extends layout
 
 block content
     if error
-            div
-                p.error An error occured.
-    else
-            div
-                each fs in files
-                    each f in fs
-                        if f.isDir == true
-                            p(style="color:blue;") #{f.name}
-                    each f in fs
-                        if f.isDir == false
-                            p(style="color:green;") #{f.name}
+        div
+            p.error An error occured : #{error}
+    div
+        each fs in files
+            each f in fs
+                if f.isDir == true
+                    p 
+                        a(style="color:blue;", href="/file_system?fs=" + f.name) #{f.name}
+            each f in fs
+                if f.isDir == false
+                    p(style="color:green;") #{f.name}

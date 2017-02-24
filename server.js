@@ -3,9 +3,7 @@ var express = require('express'),
         Strategy = require('passport-local').Strategy,
         db = require('./lib/db'),
         app = express(),
-        port = 3000,
-        pattName = /\w{3}\w*/,
-        pattPass = /\S{6}\S*/;
+        port = 3000;
 
 passport.use(new Strategy(
         function (username, password, cb) {
