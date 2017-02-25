@@ -4,7 +4,21 @@ block content
     if error
         div
             p.error An error occured : #{error}
+    if user.ADMIN == 'TRUE'
+        div
+            h1 Set the root folder
+            form(action="/set_root_folder", method="post")
+                table.form
+                    tr
+                        td.td_label 
+                            label Root folder: 
+                        td.td_input 
+                            input(type="text", name="root_folder", value=root_folder)
+                    tr
+                        td(colspan="2").td_submit
+                            input(type="submit", name="submit_root_folder", value="Set root folder")
     div
+        h1 File system
         table.fs_table
             tr.fs_table_header_row.fs_table_row
                 td.fs_table_header_cell.fs_table_cell_selection
