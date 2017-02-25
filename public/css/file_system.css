@@ -1,0 +1,46 @@
+.fs_table{
+    /*border-collapse: collapse;*/
+    width: 90%;
+    /*border-radius: 25px;*/
+    background-color: white;
+}
+
+.fs_table td {
+    border: 1px solid #eeeeee;
+}
+
+.fs_table_header_row{
+    color: gray;
+    background-color: #DDDDDD;
+}
+
+.fs_table_header_cell{
+}
+
+:not(.fs_table_header_row).fs_table_row {
+    font-size: 0.85em;
+}
+
+:not(.fs_table_header_row).fs_table_row:hover {
+    /*background-color: #aeb2fe;*/
+}
+
+.fs_table_row {
+    line-height: 0px;
+}
+
+.fs_table_cell_selection{
+    width: 50px;
+}
+
+:not(.fs_table_header_cell).fs_table_cell_name{
+    text-align: left;
+}
+
+.fs_table_cell_perm{
+    width: 100px;
+}
+
+.fs_table_cell_size{
+    width: 50px;
+}

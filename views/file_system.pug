@@ -5,11 +5,37 @@ block content
         div
             p.error An error occured : #{error}
     div
-        each fs in files
-            each f in fs
-                if f.isDir == true
-                    p 
-                        a(style="color:blue;", href="/file_system?fs=" + f.name) #{f.name}
-            each f in fs
-                if f.isDir == false
-                    p(style="color:green;") #{f.name}
+        table.fs_table
+            tr.fs_table_header_row.fs_table_row
+                td.fs_table_header_cell.fs_table_cell_selection
+                    p Selection
+                td.fs_table_header_cell.fs_table_cell_name
+                    p Name
+                td.fs_table_header_cell.fs_table_cell_size
+                    p Size
+                td.fs_table_header_cell.fs_table_cell_perm
+                    p Permissions
+            each fs in files
+                each f in fs
+                    if f.isDir == true
+                        tr.fs_table_row
+                            td.fs_table_cell_selection
+                                input(type="checkbox", name="selected", value="TRUE")
+                            td.fs_table_cell_name
+                                p
+                                    a(style="color:blue;", href="/file_system?fs=" + f.name) #{f.name}
+                            td.fs_table_cell_size
+                                p DIR
+                            td.fs_table_cell_perm
+                                p rwx | rwx | rwx
+                each f in fs
+                    if f.isDir == false
+                        tr.fs_table_row
+                            td.fs_table_cell_selection
+                                input(type="checkbox", name="selected", value="TRUE")
+                            td.fs_table_cell_name
+                                p(style="color:green;") #{f.name}
+                            td.fs_table_cell_size
+                                p 103 M
+                            td.fs_table_cell_perm
+                                p --- --- ---
