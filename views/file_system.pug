@@ -39,9 +39,9 @@ block content
                                 p
                                     a(style="color:blue;", href="/file_system?fs=" + f.name) #{f.name}
                             td.fs_table_cell_size
-                                p DIR
+                                p dir
                             td.fs_table_cell_perm
-                                p rwx | rwx | rwx
+                                p #{f.perm}
                 each f in fs
                     if f.isDir == false
                         tr.fs_table_row
@@ -50,6 +50,6 @@ block content
                             td.fs_table_cell_name
                                 p(style="color:green;") #{f.name}
                             td.fs_table_cell_size
-                                p 103 M
+                                p #{f.size}
                             td.fs_table_cell_perm
-                                p --- --- ---
+                                p #{f.perm}
