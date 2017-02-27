@@ -1,6 +1,10 @@
 extends layout
 
 block content
+    script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(type='text/javascript', src='/js/fill_file_table.js')
+    script(type='text/javascript', src='/js/style_overide.js')
+    input(type='hidden', id='current', value=current)
     if error
         div
             p.error An error occured : #{error}
@@ -20,36 +24,16 @@ block content
     div
         h1 File system
         table.fs_table
-            tr.fs_table_header_row.fs_table_row
-                td.fs_table_header_cell.fs_table_cell_selection
-                    p Selection
-                td.fs_table_header_cell.fs_table_cell_name
-                    p Name
-                td.fs_table_header_cell.fs_table_cell_size
-                    p Size
-                td.fs_table_header_cell.fs_table_cell_perm
-                    p Permissions
-            each fs in files
-                each f in fs
-                    if f.isDir == true
-                        tr.fs_table_row
-                            td.fs_table_cell_selection
-                                input(type="checkbox", name="selected", value="TRUE")
-                            td.fs_table_cell_name
-                                p
-                                    a(style="color:blue;", href="/file_system?fs=" + f.name) #{f.name}
-                            td.fs_table_cell_size
-                                p dir
-                            td.fs_table_cell_perm
-                                p #{f.perm}
-                each f in fs
-                    if f.isDir == false
-                        tr.fs_table_row
-                            td.fs_table_cell_selection
-                                input(type="checkbox", name="selected", value="TRUE")
-                            td.fs_table_cell_name
-                                p(style="color:green;") #{f.name}
-                            td.fs_table_cell_size
-                                p #{f.size}
-                            td.fs_table_cell_perm
-                                p #{f.perm}
+            tbody
+                tr.fs_table_header_row.fs_table_row
+                    td.fs_table_header_cell.fs_table_cell_selection
+                        p Selection
+                    td.fs_table_header_cell.fs_table_cell_name
+                        p Name
+                    td.fs_table_header_cell.fs_table_cell_size
+                        p Size
+                    td.fs_table_header_cell.fs_table_cell_perm
+                        p Permissions
+            tbody
+    script(type="text/javascript").
+        fillTable();

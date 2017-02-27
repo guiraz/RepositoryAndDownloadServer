@@ -1,4 +1,4 @@
-$(function () {
+function styleOveride() {
     $('.fs_table_row').not('.fs_table_header_row')
             .filter(":even")
             .css("background-color", "#dee0fe");
@@ -17,13 +17,15 @@ $(function () {
         }
     });
 
-    $('.fs_table_row').not('.fs_table_header_row')
+    $('.fs_table_cell_name').not('.fs_table_header_cell')
             .filter(function (index, elem) {
                 return $(elem).find("a").length > 0;
             })
             .each(function (index, elem) {
-                $(elem).dblclick(function () {
-                    window.location.href = $(elem).find("a").attr("href");
+                $(elem).css( 'cursor', 'pointer' );
+                $(elem).click(function () {
+                    $("#current").val($("#current").val() + "/" + $($(elem).find("a")[0]).text());
+                    fillTable();
                 });
             });
-});
+};
