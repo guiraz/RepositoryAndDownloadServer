@@ -42,3 +42,8 @@ table .button img{
     text-align: right;
     color: #555555;
 }
+
+.td_textarea textarea {
+    width: 90%;
+    height: 150px;
+}

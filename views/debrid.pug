@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    if error
+        div
+            p.error An error occured : #{error}
+    if user.ADMIN == 'TRUE'
+        div
+            h1 Set the download folder
+            form(action="/set_download_folder", method="post")
+                table.form
+                    tr
+                        td.td_label 
+                            label Download folder: 
+                        td.td_input 
+                            input(type="text", name="download_folder", value=download_folder)
+                    tr
+                        td(colspan="2").td_submit
+                            input(type="submit", name="submit_download_folder", value="Set")
+    div
+        h1 Debrid files
+        form(action="/debrid", method="post")
+            table.form
+                tr
+                    td.td_textarea 
+                        textarea(name="to_debrid")
+                tr
+                    td(colspan="2").td_submit
+                        input(type="submit", name="Submit", value="Debrid")

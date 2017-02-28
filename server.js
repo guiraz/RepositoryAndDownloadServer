@@ -59,5 +59,6 @@ require('./lib/route/login.js')(app, passport);
 require('./lib/route/manage.js')(app);
 require('./lib/route/settings.js')(app);
 require('./lib/route/file_system.js')(app);
+require('./lib/route/debrid.js')(app);
 
 app.listen(port);
