@@ -1,6 +1,24 @@
 extends layout
 
 block content
+    script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    script(type='text/javascript', src='/js/debrid.js')
+    div(id="glass")
+        div(id="option_pane")
+            table
+                tr
+                    td
+                        label ID : 
+                    td
+                        input(class="login_text", type="text", name="login_id")
+                tr
+                    td
+                        label Password : 
+                    td
+                        input(class="login_text", type="password", name="login_pwd")
+                tr
+                    td(colspan="2")
+                        input(id="login_submit", type="submit", name="submit_login", value="Log in")
     if error
         div
             p.error An error occured : #{error}
@@ -19,11 +37,11 @@ block content
                             input(type="submit", name="submit_download_folder", value="Set")
     div
         h1 Debrid files
-        form(action="/debrid", method="post")
+        form(action="/debrid", method="post", onSubmit="return debrid()")
             table.form
                 tr
                     td.td_textarea 
                         textarea(name="to_debrid")
                 tr
                     td(colspan="2").td_submit
-                        input(type="submit", name="Submit", value="Debrid")
+                        input(type="submit", name="submit_debrid", value="Debrid")
